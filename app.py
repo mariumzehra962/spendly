@@ -104,7 +104,22 @@ def logout():
 
 @app.route("/profile")
 def profile():
-    return "Profile page — coming in Step 4"
+    if not session.get("user_id"):
+        return redirect(url_for("login"))
+
+    db = get_db()
+    user = db.execute(
+        "SELECT id, name, email, created_at FROM users WHERE id = ?",
+        (session["user_id"],),
+    ).fetchone()
+    stats = db.execute(
+        "SELECT COUNT(*) AS count, COALESCE(SUM(amount), 0) AS total "
+        "FROM expenses WHERE user_id = ?",
+        (session["user_id"],),
+    ).fetchone()
+    db.close()
+
+    return render_template("profile.html", user=user, stats=stats)
 
 
 @app.route("/expenses/add")
