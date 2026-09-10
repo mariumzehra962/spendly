@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Your Profile — Spendly{% endblock %}
+
+{% block content %}
+<section class="profile-section">
+    <div class="profile-container">
+
+        <div class="profile-header">
+            <h1 class="profile-title">Your Profile</h1>
+            <p class="profile-subtitle">Account details and expense summary</p>
+        </div>
+
+        <div class="profile-card">
+            <div class="profile-field">
+                <span class="profile-field-label">Name</span>
+                <span class="profile-field-value">{{ user["name"] }}</span>
+            </div>
+            <div class="profile-field">
+                <span class="profile-field-label">Email</span>
+                <span class="profile-field-value">{{ user["email"] }}</span>
+            </div>
+            <div class="profile-field">
+                <span class="profile-field-label">Member since</span>
+                <span class="profile-field-value">{{ user["created_at"] }}</span>
+            </div>
+        </div>
+
+        <div class="profile-stats">
+            <div class="mock-stat">
+                <span class="mock-stat-label">Total expenses</span>
+                <span class="mock-stat-value">{{ stats["count"] }}</span>
+            </div>
+            <div class="mock-stat">
+                <span class="mock-stat-label">Total spent</span>
+                <span class="mock-stat-value">${{ "%.2f"|format(stats["total"]) }}</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
